@@ -1,0 +1,5 @@
+import "mindmap.nodes.*"
+
+var MIND_NODES = [ 
+Circle, Rod, Capsule,
+]

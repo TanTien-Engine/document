@@ -1,0 +1,32 @@
+import "network.edit_op" for EditOP as NetworkEditOP
+import "editor.editor" for Editor
+
+class Mindeditor is Editor
+{
+	load()
+	{
+		super.load()
+
+		this.nodes_op = NetworkEditOP(this.camera, this.scene_stack, this.popup_cb)
+		this.editop = this.nodes_op
+
+		this.prepare_nodes()
+	}
+
+	prepare_nodes()
+	{
+		this.clear_popup_nodes()
+
+		import "mindnodes" for MIND_NODES
+		for (var node in MIND_NODES) {
+			super.add_popup_node(node)
+		}
+	}
+
+	load_file_imports()
+	{
+		return super.load_file_imports() + "
+import \"network.network\" for Network
+"
+	}
+}

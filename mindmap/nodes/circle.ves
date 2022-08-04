@@ -1,0 +1,32 @@
+import "blueprint.variant" for VAR_TYPE_ANY
+import "network.vertex" for Vertex
+import "network.vertex_shape" for SHAPE_CIRCLE
+
+class Circle is Vertex
+{
+	init()
+	{
+		super.init()
+
+		this.shape = SHAPE_CIRCLE
+
+		this.pin_types_f = [ VAR_TYPE_ANY ]
+		this.pin_types_t = [ 
+			[ VAR_TYPE_ANY ] 
+		]
+
+		this.title = "circle"
+	}
+
+	to_string(name) 
+	{
+		return "
+%(name).title = \"%(this.title)\"
+"
+	}
+
+	get_title()
+	{
+		return this.title
+	}
+}
