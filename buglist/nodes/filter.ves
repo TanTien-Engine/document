@@ -1,0 +1,55 @@
+import "blueprint.node" for Node
+import "blueprint.pin" for Pin
+import "blueprint.variant" for Variant, VAR_TYPE_STRING, VAR_TYPE_ARRAY
+import "blueprint.blueprint" for Blueprint
+
+class Filter is Node
+{
+	init() 
+	{
+		super.init()
+
+		this.imports = [
+			Pin(this, "bugs", VAR_TYPE_ARRAY),
+			Pin(this, "need", VAR_TYPE_STRING),
+		]
+		this.exports = [
+			Pin(this, "bugs", VAR_TYPE_ARRAY),
+		]	
+
+		this.layout()
+	}
+
+	calc_value(idx) 
+	{
+		var v_bugs = Blueprint.calc_input_value(this, 0)
+		if (!v_bugs) {
+			return nil
+		}
+
+		var v_need = Blueprint.calc_input_value(this, 1)
+		if (!v_need) {
+			return v_bugs
+		}
+
+		var ret = []
+		for (var v_bug in v_bugs.value)
+		{
+			if (this.need_select(v_bug.value, v_need.value)) {
+				ret.add(v_bug)
+			}
+		}
+		return Variant(ret)
+	}
+
+	need_select(bug, str)
+	{
+		for (var label in bug.labels)
+		{
+			if (label == str) {
+				return true
+			}
+		}
+		return false
+	}
+}

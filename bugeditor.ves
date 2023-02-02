@@ -1,0 +1,30 @@
+import "editor.editor" for Editor
+
+class Bugeditor is Editor
+{
+	load()
+	{
+		super.load()
+
+		this.prepare_nodes()
+	}
+
+	prepare_nodes()
+	{
+		this.clear_popup_nodes()
+
+		import "blueprint.nodes.merge" for Merge
+		super.add_popup_node(Merge)
+		import "blueprint.nodes.print" for Print
+		super.add_popup_node(Print)
+		import "blueprint.nodes.commentary" for Commentary
+		super.add_popup_node(Commentary)
+		import "blueprint.nodes.expand" for Expand
+		super.add_popup_node(Expand)
+
+		import "bugnodes" for BUG_NODES
+		for (var node in BUG_NODES) {
+			super.add_popup_node(node)
+		}
+	}
+}

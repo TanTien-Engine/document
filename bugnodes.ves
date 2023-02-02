@@ -1,0 +1,5 @@
+import "buglist.nodes.*"
+
+var BUG_NODES = [ 
+Bug, Label, Filter, Text,
+]

@@ -1,0 +1,63 @@
+import "blueprint.node" for Node
+import "blueprint.pin" for Pin
+import "blueprint.variant" for Variant, VAR_TYPE_STRING
+import "blueprint.node_param" for NodeParam
+import "blueprint.node_layout" for DEFAULT_HEIGHT
+import "blueprint.node_style" for TB_TITLE, COL_TEXT
+import "graphics" for Graphics, Textbox
+import "math" for Math
+
+var PANEL_WIDTH  = 300
+var PANEL_HEIGHT = DEFAULT_HEIGHT * 3
+
+var TEXT_SCALE = 0.5
+
+var TEXT_BOX = Textbox()
+TEXT_BOX.width = PANEL_WIDTH / TEXT_SCALE
+TEXT_BOX.height = PANEL_HEIGHT / TEXT_SCALE
+TEXT_BOX.font_size = 24
+TEXT_BOX.font_color = COL_TEXT
+TEXT_BOX.align_hori = 0
+TEXT_BOX.align_vert = 0
+
+class Text is Node
+{
+	init() 
+	{
+		super.init()
+
+		this.params.add(NodeParam("name", "Title"))
+		this.params.add(NodeParam("data", "content"))
+
+		this.layout()
+	}
+
+	calc_value(idx) 
+	{
+		var str = this.query_param("data").value
+		return Variant(VAR_TYPE_STRING, str)
+	}
+
+	get_title()
+	{
+		return this.query_param("name").value
+	}
+
+	draw(mt, cam_mt)
+	{
+		super.draw(mt, cam_mt)
+
+		var data = this.query_param("data").value
+		var x = this.pos.x
+		var y = this.pos.y - DEFAULT_HEIGHT * 0.5
+		Graphics.draw_text("%(data)", x, y, TEXT_SCALE, TEXT_BOX)
+	}
+
+	layout() 
+	{
+		super.layout()
+
+		this.style.width = PANEL_WIDTH
+		this.style.height = this.style.height + PANEL_HEIGHT
+	}
+}

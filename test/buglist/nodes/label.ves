@@ -1,0 +1,67 @@
+var node0 = ::buglist::nodes::bug::Bug()
+node0.query_param("name").value = "Bug A"
+
+_editor.add_node(node0, 76, 95)
+
+var node1 = ::buglist::nodes::label::Label()
+node1.query_param("str").value = "Cause A"
+
+_editor.add_node(node1, -246, 80)
+
+var node2 = ::buglist::nodes::label::Label()
+node2.query_param("str").value = "Cause B"
+
+_editor.add_node(node2, -246, 30)
+
+var node3 = ::buglist::nodes::bug::Bug()
+node3.query_param("name").value = "Bug B"
+
+_editor.add_node(node3, 77.536818181818, 29.367636363636)
+
+var node4 = ::buglist::nodes::label::Label()
+node4.query_param("str").value = "Cause C"
+
+_editor.add_node(node4, -245.78563636364, -33.181272727273)
+
+var node5 = ::blueprint::nodes::merge::Merge()
+
+_editor.add_node(node5, -76, 62)
+
+var node6 = ::blueprint::nodes::merge::Merge()
+
+_editor.add_node(node6, 239, 51)
+
+var node7 = ::blueprint::nodes::print::Print()
+
+_editor.add_node(node7, 382, -112)
+
+var node8 = ::buglist::nodes::filter::Filter()
+
+_editor.add_node(node8, 371.16, 0.79000000000001)
+
+var node9 = ::blueprint::nodes::commentary::Commentary()
+
+node9.set_size(400, 400)
+node9.title = "Commentary"
+
+_editor.add_node(node9, -193, 218)
+
+var node10 = ::blueprint::nodes::expand::Expand()
+
+_editor.add_node(node10, 157, 225)
+
+var node11 = ::buglist::nodes::text::Text()
+node11.query_param("name").value = "标题"
+node11.query_param("data").value = "具体内容具体内容具体内容具体内容具体内容具体内容具体内容具体内容具体内容具体内容具体内容具体内容具体内容具体内容具体内容具体内容具体内容具体内容具体内容具体内容"
+
+_editor.add_node(node11, -112, 295)
+
+Blueprint.connect(node4, "str", node3, "label")
+Blueprint.connect(node1, "str", node5, "in0")
+Blueprint.connect(node2, "str", node5, "in1")
+Blueprint.connect(node5, "list", node10, "data")
+Blueprint.connect(node5, "list", node0, "label")
+Blueprint.connect(node0, "bug", node6, "in0")
+Blueprint.connect(node3, "bug", node6, "in1")
+Blueprint.connect(node6, "list", node8, "bugs")
+Blueprint.connect(node1, "str", node8, "need")

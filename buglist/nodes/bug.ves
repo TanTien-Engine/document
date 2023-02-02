@@ -1,0 +1,43 @@
+import "blueprint.node" for Node
+import "blueprint.pin" for Pin
+import "blueprint.variant" for Variant, VAR_TYPE_STRING, VAR_TYPE_ARRAY
+import "blueprint.node_param" for NodeParam
+import "blueprint.variant_helper" for VariantHelper
+import "blueprint.blueprint" for Blueprint
+import "buglist.variant" for VAR_TYPE_BUG, VarBug
+
+class Bug is Node
+{
+	init() 
+	{
+		super.init()
+
+		this.imports = [
+			Pin(this, "label", [ VAR_TYPE_STRING, VAR_TYPE_ARRAY ]),
+		]
+		this.exports = [
+			Pin(this, "bug", VAR_TYPE_BUG),
+		]	
+
+		this.params.add(NodeParam("name", "Bug"))
+
+		this.layout()
+	}
+
+	calc_value(idx) 
+	{
+		var v_bug = VarBug()
+
+		v_bug.name = this.query_param("name").value
+
+		var v_label = Blueprint.calc_input_value(this, 0)
+		v_bug.labels = VariantHelper.flatten_values(v_label, VAR_TYPE_STRING)
+
+		return Variant(VAR_TYPE_BUG, v_bug)
+	}
+
+	get_title()
+	{
+		return this.query_param("name").value
+	}
+}

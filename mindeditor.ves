@@ -17,6 +17,9 @@ class Mindeditor is Editor
 	{
 		this.clear_popup_nodes()
 
+		import "blueprint.nodes.commentary" for Commentary
+		super.add_popup_node(Commentary)
+
 		import "mindnodes" for MIND_NODES
 		for (var node in MIND_NODES) {
 			super.add_popup_node(node)

@@ -1,0 +1,15 @@
+var VAR_TYPE_BUG = "bug"
+
+class VarBug
+{
+	init()
+	{
+		this.name = ""
+		this.labels = []
+	}
+
+	toString()
+	{
+		return this.name
+	}
+}
